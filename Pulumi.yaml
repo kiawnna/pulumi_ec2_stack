@@ -1,0 +1,3 @@
+name: your-stack-name-here-from-pulumi
+runtime: nodejs
+description: Blackbird AI Infrastructure
