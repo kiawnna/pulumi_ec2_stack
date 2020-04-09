@@ -1,4 +1,4 @@
-# Secure ECS Service App stack with autoscaling and loadblanacing via Pulumi Platform
+# Secure EC2 App stack with autoscaling and loadblanacing via Pulumi Platform
 
 This project will create a new app from a an AWS AMI set up on EC2 instances.
 The app created will be automatically load-balanced and auto-scaled. All
