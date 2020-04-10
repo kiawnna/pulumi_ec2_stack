@@ -22,9 +22,9 @@ const ssmObject: ssmObjectParams = {
 // INITIAL set domainName to your domain name that will be pointed at a load balancer
 const domainName = 'your-domain-name-here'
 const priorityBase = 102
+const instanceType = 't2.medium'
 
 // NEW_APP Copy a JSON object and give it new application-specific values
-// instanceType in LaunchConfiguration below is set to t2.medium. Still working on parameterizing that value.For now, change it manually as needed.
 const apps = [
     {
         name: 'app-name-goes-here',
@@ -158,7 +158,7 @@ async function main() {
             priority: priorityBase + (20 * i)
         });
 
-        let launchconfiguration = new aws.ec2.LaunchConfiguration(`${x.name}LC`, { instanceType: 't2.medium', imageId: x.ami_id, name: `ec2-${x.name}-LC`, securityGroups: [ec2InstanceSecurityGroup.id], rootBlockDevice: {volumeSize: x.ebsVolumeSize}})
+        let launchconfiguration = new aws.ec2.LaunchConfiguration(`${x.name}LC`, { instanceType: instanceType, imageId: x.ami_id, name: `ec2-${x.name}-LC`, securityGroups: [ec2InstanceSecurityGroup.id], rootBlockDevice: {volumeSize: x.ebsVolumeSize}})
         
         let autoscalinggroup = new aws.autoscaling.Group(`${x.name}asg`, {
             availabilityZones: ["us-east-1a", "us-east-1b"],
