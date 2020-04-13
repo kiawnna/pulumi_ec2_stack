@@ -37,6 +37,17 @@ const apps = [
         maxNumInstances: 5,
         targetPercentCPUUtilization: 75,
         ebsVolumeSize: 50
+    },
+    {
+        name: 'second-app-name-goes-here',
+        healthCheckPath: '/healthcheckpathhere',
+        port: 'port-as-a-string',
+        ami_id: 'id-of-ami',
+        desiredCapacity: 3,
+        minNumInstances: 1,
+        maxNumInstances: 5,
+        targetPercentCPUUtilization: 75,
+        ebsVolumeSize: 50
     }
 ];
 
