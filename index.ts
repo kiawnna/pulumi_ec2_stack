@@ -6,9 +6,11 @@ import { AutoScalingGroup } from "@pulumi/awsx/autoscaling";
 
 // INITIAL Create SSM Parameters for these values: ['/aiAPI/certArn', '/aiAPI/exampleEcrUrl']
 // '/aiAPI/certArn' should be a verified AWS Certificate Manager certificate, to enable HTTPS traffic through your load
+const region = 'us-east-1'
+
 
 const ssm = new SSM({
-    region: 'us-east-1'
+    region: region
 });
 
 interface ssmObjectParams {
@@ -21,7 +23,6 @@ const ssmObject: ssmObjectParams = {
 
 // INITIAL set domainName to your domain name that will be pointed at a load balancer
 const domainName = 'your-domain-name-here'
-const priorityBase = 102
 const instanceType = 't2.medium'
 
 // NEW_APP Copy a JSON object and give it new application-specific values
@@ -154,14 +155,13 @@ async function main() {
                     },
                 },
             ],
-            listenerArn: newlistener.listener.arn,
-            priority: priorityBase + (20 * i)
+            listenerArn: newlistener.listener.arn
         });
 
         let launchconfiguration = new aws.ec2.LaunchConfiguration(`${x.name}LC`, { instanceType: instanceType, imageId: x.ami_id, name: `ec2-${x.name}-LC`, securityGroups: [ec2InstanceSecurityGroup.id], rootBlockDevice: {volumeSize: x.ebsVolumeSize}})
         
         let autoscalinggroup = new aws.autoscaling.Group(`${x.name}asg`, {
-            availabilityZones: ["us-east-1a", "us-east-1b"],
+            availabilityZones: [`${region}a`, `${region}b`],
             healthCheckGracePeriod: 25,
             healthCheckType: 'EC2',
             desiredCapacity: x.desiredCapacity,
