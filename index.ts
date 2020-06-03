@@ -25,7 +25,7 @@ const ssmObject: ssmObjectParams = {
 const domainName = 'your-domain-name-here'
 const instanceType = 't2.medium'
 
-// NEW_APP Copy a JSON object and give it new application-specific values
+// NEW_APP Copy a JSON object and give it new application-specific values.
 const apps = [
     {
         name: 'app-name-goes-here',

@@ -1,13 +1,13 @@
-# Secure EC2 App stack with autoscaling and loadblanacing via Pulumi Platform
+# Secure EC2 App stack with autoscaling and load-balancing via Pulumi Platform
 
-This project will create a new app from a an AWS AMI set up on EC2 instances.
+This project will create a new app from an AWS AMI set up on EC2 instances.
 The app created will be automatically load-balanced and auto-scaled. All
 underlying infrastructure, including a vpc, subnets, security groups, ECS clusters, load-balancers,
-autosclaing group for your EC2 instances, listeners, listerner rules and target groups, will be
+autosclaing group for your EC2 instances, listeners, listener rules and target groups, will be
 automatically provisioned for you when you deploy. The autoscaling policy in place is set up as a
 percentage of CPU Utilization.
 
-This project runs on Pulumi, a free opensource cloudformation platform similar to Terraform,
+This project runs on Pulumi, a free open-source CloudFormation platform similar to Terraform,
 Ansible, and the AWS-CDK. We chose Pulumi because it is cloud agnostic, more intuitive than Terraform
 and Ansible, and takes fewer lines of code to create complex infrastructure than other platforms.
 
@@ -17,10 +17,9 @@ afterward only uses Step 3 (from below) and then the command `make deploy`. That
 new API that needs to be launched will take less than 5 minutes to get deployed.
 
 # Prerequisites:
-Before the Getting Started section, make sure you have made an AWS AMI chosen.
+Before the Getting Started section, make sure you have created/chosen an AWS AMI.
 You will need to copy the ami-id into index.ts file.
-You also need to create a free
-Pulumi account early on as new accounts can take a few hours to validate.
+You also need to create a free Pulumi account early on as new accounts can take a few hours to validate.
 
 # Getting Started:
 Below is a quick outline of the steps needed to deploy your first app using this Pulumi template.
@@ -30,17 +29,17 @@ Do all 5 steps the first time you set up an app.
 ## NEW APPS:
 Only do Step 3 and the command `make deploy`.
 
-### Step 1: Certificate and New Paramter
+### Step 1: Certificate and New Parameter
 - Create a certificate for your domain and a new standard-string parameter for the following value: '/aiAPI/certArn'.
 - '/aiAPI/certArn' should be a verified AWS Certificate Manager certificate, to enable HTTPS traffic through your
 load balancer.
 - Request a certificate and validate it through EMAIL or DNS. Once it is validated, copy the ARN of the
-certificate and go to AWS Systems Manager. Create a new Standard String Parameter called '/aiAPIcertArn' (spelling
+certificate and go to AWS Systems Manager. Create a new Standard String Parameter called '/aiAPI/certArn' (spelling
 and capitalization is important). Paste the arn you copied into the value field and create the parameter.
 
 ### Step 2: New Pulumi Stack and Update makefile
 - Create a new Pulumi stack in the Pulumi dashboard. Copy this stack name into your makefile and your Pulumi.yaml file.
-- Create a new acecss roken and copy it (you will only see it once) into the makefile.
+- Create a new access token and copy it (you will only see it once) into the makefile.
 - In the makefile, you also need to update the Pulumi owner field and the stack name field to yourself and the name
 of the new stack you just created, respectively.
 
@@ -62,7 +61,7 @@ of the new stack you just created, respectively.
 ```
 make prepare
 ```
-This command will install pulumi and all the dependicies this app needs to run
+This command will install Pulumi and all the dependencies this app needs to run
 ```
 make login
 ```
@@ -72,7 +71,7 @@ make deploy
 ```
 This command will deploy your app and all the necessary AWS resources.
 
-### Step 5: Create a subdomain and point it at the loadbalancer
-- Create a subdomain (in AWS Route53 if that is what you use) and point it at the loadbalancer that was just created.
+### Step 5: Create a subdomain and point it at the load-balancer
+- Create a subdomain (in AWS Route53 if that is what you use) and point it at the load-balancer that was just created.
 To do this in AWS Route53, go to your Hosted Zones and create a new record set. Check "Yes" for Alias and in the drop down
-list the name of your loadbalancer should appear.
+list the name of your load-balancer should appear.
